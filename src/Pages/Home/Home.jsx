@@ -1,8 +1,11 @@
-import Banner from "./Banner/Banner";
-import Catagory from "./Catagory/Catagory";
-import PopularMenu from "./PopularMenu.jsx/PopularMenu";
-import Services from "./Services";
-
+import Banner from './Banner/Banner';
+import Catagory from './Catagory/Catagory';
+import Contact from './Contact';
+import Featured from './Featured/Featured';
+import PopularMenu from './PopularMenu.jsx/PopularMenu';
+import Recommends from './Recommends/Recommends';
+import Services from './Services';
+import Testimonials from './Testimonial/Testimonials';
 
 const Home = () => {
     return (
@@ -11,6 +14,10 @@ const Home = () => {
             <Catagory />
             <Services />
             <PopularMenu />
+            <Contact />
+            <Recommends />
+            <Featured />
+            <Testimonials />
         </div>
     );
 };
