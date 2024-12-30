@@ -4,21 +4,30 @@ const Navbar = () => {
     const Link = (
         <>
             <li className="">
-                <NavLink to="/" className="">Home</NavLink>
+                <NavLink to="/" className="">
+                    Home
+                </NavLink>
             </li>
             <li className="">
-                <NavLink to="/contactUs" className="">Contact Us</NavLink>
+                <NavLink to="/contactUs" className="">
+                    Contact Us
+                </NavLink>
             </li>
             <li className="">
-                <NavLink to="/dashboard" className="">DashBoard</NavLink>
+                <NavLink to="/dashboard" className="">
+                    DashBoard
+                </NavLink>
             </li>
             <li className="">
-                <NavLink to="/ourMenu" className="">Our Menu</NavLink>
+                <NavLink to="/menu" className="">
+                    Our Menu
+                </NavLink>
             </li>
             <li className="">
-                <NavLink to="/ourShop" className="">Our Shop</NavLink>
+                <NavLink to="/ourShop" className="">
+                    Our Shop
+                </NavLink>
             </li>
-
         </>
     );
     return (

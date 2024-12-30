@@ -1,3 +1,4 @@
+import PageTitle from '../../Components/PageTitle';
 import Banner from './Banner/Banner';
 import Catagory from './Catagory/Catagory';
 import Contact from './Contact';
@@ -10,6 +11,9 @@ import Testimonials from './Testimonial/Testimonials';
 const Home = () => {
     return (
         <div>
+            {/* Setup Page-Title by react Helmet */}
+            <PageTitle title="Home" />
+
             <Banner />
             <Catagory />
             <Services />
