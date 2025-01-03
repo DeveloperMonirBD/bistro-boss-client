@@ -1,9 +1,12 @@
 import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../providers/AuthProvider';
+import { FaShoppingCart } from 'react-icons/fa';
+import useCart from '../../hooks/useCart';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
+    const [cart] = useCart();
 
     const handleLogOut = () => {
         logOut()
@@ -11,7 +14,7 @@ const Navbar = () => {
             .catch(error => console.log(error));
     };
 
-    const Link = (
+    const link = (
         <>
             <li className="">
                 <NavLink to="/" className="">
@@ -43,10 +46,18 @@ const Navbar = () => {
                     Secret
                 </NavLink>
             </li>
+            <li className="p-0 m-0">
+                <Link to="/dashboard/cart">
+                    <div className="flex items-center gap-2 p-2">
+                        <FaShoppingCart />
+                        <div className="badge badge-secondary">+{cart.length}</div>
+                    </div>
+                </Link>
+            </li>
 
             {user ? (
                 <>
-                    <span>{user?.displayName}</span>
+                    {/* <span>{user?.displayName}</span> */}
                     <button onClick={handleLogOut} className="btn btn-ghost">
                         logOut
                     </button>
@@ -63,8 +74,8 @@ const Navbar = () => {
         </>
     );
     return (
-        <div className="navbar fixed z-10 bg-base-100">
-            <div className="navbar-start">
+        <div className="navbar sticky top-0 z-10 bg-base-100">
+            <div className=" navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -72,16 +83,13 @@ const Navbar = () => {
                         </svg>
                     </div>
                     <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                        {Link}
+                        {link}
                     </ul>
                 </div>
                 <a className="btn btn-ghost text-xl">Bistro Boss</a>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1">{Link}</ul>
-            </div>
-            <div className="navbar-end">
-                <a className="btn">Button</a>
+                <ul className="menu menu-horizontal px-1">{link}</ul>
             </div>
         </div>
     );
