@@ -9,6 +9,7 @@ import PrivetRoute from './PrivetRoute';
 import Secret from '../Pages/Shared/Secret';
 import Dashboard from '../Layout/Dashboard';
 import Cart from '../Pages/Dashboard/Cart';
+import AllUser from '../Pages/Dashboard/Admin/AllUsers/AllUser';
 
 export const router = createBrowserRouter([
     {
@@ -41,19 +42,28 @@ export const router = createBrowserRouter([
                     <PrivetRoute>
                         <Secret />
                     </PrivetRoute>
-                )              
+                )
             }
         ]
     },
     {
         path: 'dashboard',
-        element: <Dashboard />,
+        element: (
+            <PrivetRoute>
+                <Dashboard />
+            </PrivetRoute>
+        ),
         children: [
             {
                 path: 'cart',
                 element: <Cart />
+            },
+
+            // admin routes 
+            {
+                path: 'users',
+                element: <AllUser />
             }
         ]
-        
     }
 ]);

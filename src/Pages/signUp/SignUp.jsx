@@ -1,11 +1,15 @@
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import PageTitle from '../../Components/PageTitle';
-import { AuthContext } from '../../providers/AuthProvider';
 import Swal from 'sweetalert2';
+import PageTitle from '../../Components/PageTitle';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import { AuthContext } from '../../providers/AuthProvider';
+import SocialLogin from '../../Components/SocialLogin';
 
 const SignUp = () => {
+    const axiosPublic = useAxiosPublic();
+
     const {
         register,
         handleSubmit,
@@ -16,25 +20,65 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const onSubmit = data => {
-        console.log(data);
-        createUser(data.email, data.password).then(result => {
-            const loggedUser = result.user;
-            console.log(loggedUser);
-            updateUserProfile(data.name, data.photoURL)
-                .then(() => {
-                    console.log('user profile info updated')
-                    reset();
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'USer created successfully',
-                        showConfirmButton: false,
-                        timer: 1500
+        // createUser(data.email, data.password).then(result => {
+        //     const loggedUser = result.user;
+        //     console.log(loggedUser);
+        //     updateUserProfile(data.name, data.photoURL)
+        //         .then(() => {
+
+        //create user entry in the database
+        // const userInfo = {
+        //     name: data.name,
+        //     email: data.email
+        // }
+
+        // axiosPublic.post('/users', userInfo)
+        //     .then(res => {
+        //         if (res.data.insertedId) {
+        //             console.log('user added to the database')
+        //         reset();
+        //         Swal.fire({
+        //             position: 'top-end',
+        //             icon: 'success',
+        //             title: 'USer created successfully',
+        //             showConfirmButton: false,
+        //             timer: 1500
+        //         });
+        //         navigate('/');
+        //     }
+        // })
+        //         })
+        //     .catch(error => console.log(error))
+        // });
+
+        createUser(data?.email, data?.password).then(result => {
+            if (result) {
+                updateUserProfile(data?.name, data?.photoURL).then(() => {
+                    const updatedUser = {
+                        name: data.name,
+                        email: data.email,
+                        photo: data.photoURL
+                    };
+
+                    axiosPublic.post('/users', updatedUser).then(res => {
+                        if (res.data.insertedId) {
+                            console.log('user added to the database');
+                            reset();
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'USer created successfully',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            navigate('/');
+                        }
                     });
-                    navigate('/')
-                })
-            .catch(error => console.log(error))
+                });
+            }
         });
+        
+        console.log(data);
     };
 
     return (
@@ -109,11 +153,18 @@ const SignUp = () => {
                                 <input className="btn btn-primary" type="submit" value="Sign Up" />
                             </div>
                         </form>
-                        <p className='text-center pb-6'>
+
+                        <div className="divider mt-0 mb-6 mx-8">OR</div>
+
+                        <div className="flex justify-center mb-4">
+                            <SocialLogin />
+                        </div>
+
+                        <p className="text-center pb-6">
                             <small>
-                                Already have an account? 
+                                Already have an account?
                                 <Link to="/login">
-                                    <span className='underline text-blue-500'> Login</span>
+                                    <span className="underline text-blue-500"> Login</span>
                                 </Link>
                             </small>
                         </p>
